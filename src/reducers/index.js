@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
- export default combineReducers({
-   fartSandwich: () => []
- });
+import AuthReducer from './AuthReducer'
+
+export default combineReducers({
+ auth: AuthReducer
+});
