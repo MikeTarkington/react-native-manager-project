@@ -4,7 +4,8 @@ import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL
+  LOGIN_USER_FAIL,
+  LOGIN_USER
 } from './types';
 
 export const emailChanged = (text) => {
@@ -23,9 +24,15 @@ export const passwordChanged = (text) => {
 
 export const loginUser = ({ email, password }) => {
   return (dispatch) => {
+    dispatch({ type: LOGIN_USER });
+
+
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => loginUserSuccess(dispatch, user))
-      .catch(() => {
+      // console logging errors in .catch is wise because if bad code causes firebase login to fail, no errors occur so it doesn't always make it clear that the .then promise has failed as it simply sends the process to the .catch
+      .catch((error) => {
+        console.log(error);
+
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then (user => loginUserSuccess(dispatch, user))
           .catch(() => loginUserFail(dispatch));
