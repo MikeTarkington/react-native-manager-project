@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 const CardSection = (props) => {
   return (
-    <View style={styles.containerStyle}>
+    // allows for override of style on the local prop
+    <View style={[styles.containerStyle, props.style]}>
       {props.children}
     </View>
   );
